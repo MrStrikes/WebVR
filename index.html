@@ -16,9 +16,21 @@
 				const scene = document.querySelector("a-scene")
 				const controlRoom = document.querySelector("#control-room")
 				const camera = document.querySelector("#rig")
+				const audio = document.querySelector("#audio-narrative")
 				console.log(controlRoom)
 				controlRoom.addEventListener("model-loaded", () => {
-					camera.setAttribute("animation", "property: position; to: 3 0.1 0; dur: 100000; easing: linear")
+					audio.setAttribute("src", "./models/control-room/narration.mp3")
+					audio.ontimeupdate = () => {
+						let actualSoundTime = Math.round(audio.currentTime)
+						if (actualSoundTime == 30) {
+							camera.setAttribute("animation", "property: position; to: 9 0.1 0; dur: 60000; easing: linear")
+						} else if (actualSoundTime == 103) {
+							camera.setAttribute("animation", "property: position; to: 3 0.1 0; dur: 11000; easing: linear")
+						} else if (actualSoundTime == 125) {
+							camera.setAttribute("animation", "property: position; to: 3 -0.5 0; dur: 1000; easing: linear")
+							camera.setAttribute("animation__rotate", "property: rotation; to: 30 0 2O; dur: 1000;");
+						}
+					}
 			})
 		})
 		</script>
@@ -27,16 +39,21 @@
 				<img id="skyTexture" src="https://media.discordapp.net/attachments/650978109293854731/650978192739532802/f620a179ca1acfd15a0754701677fb58.png" crossorigin="anonymous">
 				<a-asset-item id="corridor" src="./models/corridor/scene.gltf"></a-asset-item>
 				<a-asset-item id="control" src="./models/control-room/scene.gltf"></a-asset-item>
+				<a-asset-item id="computer-obj" src="./models/computer/ServerV2+console.obj"></a-asset-item>
+				<a-asset-item id="computer-mtl" src="./models/computer/ServerV2+console.mtl"></a-asset-item>
 			</a-assets>
 
 			<a-entity id="rig" position="15 0.1 0" rotation="0 90 0">
 				<!--animation__2="property: position; to: 5.5 1.6 -8; dur: 5500; easing: linear; rotation: 0 90 0" -->
 				<a-camera id="camera"></a-camera>
 			</a-entity>
-
-			<a-entity id="control-room" gltf-model="#control" rotation="0 -90 0" scale="0.1 0.1 0.1" position="0 0.77 0"></a-entity>
-
+			
+			<a-entity id="control-room" gltf-model="#control" rotation="0 -90 0" scale="0.1 0.1 0.1" position="0 0.77 0">
+				<a-entity id="computer" obj-model="obj: #computer-obj; mtl: #computer-mtl" rotation="0 90 0" position="0 0 -22" scale="2 3 3"></a-entity>
+			</a-entity>
+			
 			<a-sky height="2048" radius="360" src="#skyTexture"></a-sky>
 		</a-scene>
+		<audio id="audio-narrative" autoplay></audio>
 	</body>
 </html>
