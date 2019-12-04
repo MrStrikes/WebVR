@@ -13,12 +13,12 @@
 	<body>
 		<script>
 			window.addEventListener("load", () => {
-				const scene = document.querySelector("a-scene")
-				const controlRoom = document.querySelector("#control-room")
-				const camera = document.querySelector("#rig")
-				const audio = document.querySelector("#audio-narrative")
-				console.log(controlRoom)
-				controlRoom.addEventListener("model-loaded", () => {
+			const scene = document.querySelector("a-scene")
+			const controlRoom = document.querySelector("#control-room")
+			const camera = document.querySelector("#rig")
+			const audio = document.querySelector("#audio-narrative")
+			controlRoom.addEventListener("model-loaded", () => {
+				scene.addEventListener("enter-vr", () => {
 					audio.setAttribute("src", "./models/control-room/narration.mp3")
 					audio.ontimeupdate = () => {
 						let actualSoundTime = Math.round(audio.currentTime)
@@ -31,6 +31,7 @@
 							camera.setAttribute("animation__rotate", "property: rotation; to: 30 0 2O; dur: 1000;");
 						}
 					}
+				})
 			})
 		})
 		</script>
