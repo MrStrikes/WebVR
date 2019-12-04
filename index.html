@@ -17,7 +17,6 @@
 				const controlRoom = document.querySelector("#control-room")
 				const camera = document.querySelector("#rig")
 				const audio = document.querySelector("#audio-narrative")
-				console.log(controlRoom)
 				controlRoom.addEventListener("model-loaded", () => {
 					audio.setAttribute("src", "./models/control-room/narration.mp3")
 					audio.ontimeupdate = () => {
